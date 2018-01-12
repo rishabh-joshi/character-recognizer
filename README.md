@@ -1,7 +1,7 @@
 character recognizer
 ==============================
 
-characeter recognition using neural networks on a character drawn by the user on a jav[3~[3~[3~[3~[3~[3~[3~[3~[3~[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C recognize a user drawn character on a javascript canvas using neural networks
+Recognize a user drawn character on a javascript canvas using neural networks.
 
 Project Organization
 ------------
