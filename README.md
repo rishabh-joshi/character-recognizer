@@ -1,8 +1,18 @@
 # Character Recognizer
 
-### Objective
+Predict the character drawn by the user on the web app by using a neural network model based on the grayscale pixel values of the image to assist in building a handwriting input keyboard system that can be employed on different smartphones.
 
-Create a web application that allows the user to draw any character (0-9, a-z, A-Z) on a canvas, recognize the character using a neural network model, and display the results on the web app.
+### Vision
+
+Assist in building a handwriting input keyboard system that can be employed on different smartphones.
+
+### Mission
+
+Predict the character drawn by the user on the web app by using a neural network model based on the grayscale pixel values of the image.
+
+### Success criteria
+
+Accuracy of classification for the neural network on a pre-determined test set of grayscale character images.
 
 ### Dependencies
 
