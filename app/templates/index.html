@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>Character Recognizer</title>
+
+<link rel="stylesheet" type="text/css" href="webapp.css"/>
+
+</head>
+
+<body onload="init()">
+
+    <div id="sketchpadapp">
+        <div class="rightside">
+            <canvas id="sketchpad" height="300" width="400"/>
+        </div>
+    </div>
+
+    <div class="resultboxposition">
+        <canvas id="resultbox" height="300" width="400"/>
+    </div>
+
+    <div class="clearbuttonposition">
+        <input type="submit" value="Clear Sketchpad" id="clearbutton" onclick="clearCanvas(canvas,ctx);">
+    </div>
+
+    <div class="recognizebuttonposition">
+        <input type=image src=arrow2.png height = 100px width = 150px alt="Submit feedback" value="Recognize!" id="recognizebutton" onclick="downloadCanvas(canvas);">
+    </div>
+    
+</body>
+
+<script type="text/javascript" src="webapp.js"></script>
+
+</html>
+
