@@ -76,4 +76,7 @@ target/
 .ipynb_checkpoints/
 
 # exclude data from source control by default
-/data/
+develop/data/
+
+# exlclude config file
+develop/config

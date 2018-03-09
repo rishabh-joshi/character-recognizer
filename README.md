@@ -1,30 +1,42 @@
-# Character Recognizer
+# Character Recognition Project Charter
+
+Character recognition project for the course MSiA423: Analytics Value Chain
+
+## Project Charter
 
 Predict the character drawn by the user on the web app by using a neural network model based on the grayscale pixel values of the image to assist in building a handwriting input keyboard system that can be employed on different smartphones.
 
-### Vision
+### Vision 
 
 Assist in building a handwriting input keyboard system that can be employed on different smartphones.
 
-### Mission
+### Mission 
 
 Predict the character drawn by the user on the web app by using a neural network model based on the grayscale pixel values of the image.
 
-### Success criteria
+### Success criteria 
 
 Accuracy of classification for the neural network on a pre-determined test set of grayscale character images.
 
+## Getting Started
+
 ### Dependencies
 
-Successfully running the code requires:
+Dependencies are listed in the [develop/requirements.txt](develop/requirements.txt)
 
-- Python (>= 3.4)
-- numpy (>= 1.13.1)
-- pandas(>= 0.20.3)
-- Keras (>= 2.1.3)
-- scikit-learn==0.19.1
+### Setting up your Virtual Environment
 
-### Code
-The code can be found in the jupyter notebook, [develop/recognizer.ipynb](develop/recognizer.ipynb)
+Create a new virtual environment
+
+```
+virtualenv -p python3 CharRecognizer
+source CharRecognizer/bin/activate
+```
+
+Install requirements
+
+```
+pip install -r develop/requirements.txt
+```
 
 *Development in progress.*

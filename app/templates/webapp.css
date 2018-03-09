@@ -1,0 +1,82 @@
+/* Some CSS styling */
+#sketchpadapp {
+    /* Prevent nearby text being highlighted when accidentally dragging mouse outside confines of the canvas */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.leftside {
+    float:left;
+    width:220px;
+    height:285px;
+    background-color:#def;
+    padding:10px;
+    border-radius:4px;
+}
+.rightside {
+    float:left;
+    margin-left:100px;
+    margin-top:200px;
+}
+
+.resultboxposition {
+    float:left;
+    margin-left:250px;
+    margin-top:275px;
+}
+
+/*positioning the clear canvas button*/
+.clearbuttonposition {
+    float:left;
+    margin-left:-400px;
+    margin-top:250px;
+}
+
+/*positioning the recognize button*/
+.recognizebuttonposition {
+    float:left;
+    margin-left:-400px;
+    margin-top:350px;
+}
+
+/*defining style for the canvas*/
+#sketchpad {
+    float:left;
+    height:300px;
+    width:400px;
+    border:2px solid #888;
+    border-radius:4px;
+    position:relative; /* Necessary for correct mouse co-ords in Firefox */
+}
+
+/*defining the style for the result box*/
+#resultbox {
+    float:left;
+    height:150px;
+    width:200px;
+    border:2px solid #888;
+    border-radius:4px;
+    position:relative; /* Necessary for correct mouse co-ords in Firefox */
+}
+
+/*defining style for the clear canvas button*/
+#clearbutton {
+    font-size: 15px;
+    padding: 10px;
+    -webkit-appearance: none;
+    background: #eee;
+    border: 1px solid #888;
+}
+
+/*defining style for the recognize button*/
+#recognizebutton {
+    font-size: 15px;
+    padding: 10px;
+    -webkit-appearance: none;
+    background: white;
+    /*border: 1px solid #888;*/
+}
