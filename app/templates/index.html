@@ -2,7 +2,343 @@
 <head>
 <title>Character Recognizer</title>
 
-<link rel="stylesheet" type="text/css" href="webapp.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    // Variables for referencing the canvas and 2dcanvas context
+    var canvas,ctx;
+
+    // Variables to keep track of the mouse position and left-button status 
+    var mouseX,mouseY,mouseDown=0;
+
+    // Variables to keep track of the touch position
+    var touchX,touchY;
+
+    // Keep track of the old/last position when drawing a line
+    // We set it to -1 at the start to indicate that we don't have a good value for it yet
+    var lastX,lastY=-1;
+
+    // Draws a line between the specified position on the supplied canvas name
+    // Parameters are: A canvas context, the x position, the y position, the size of the dot
+    function drawLine(ctx,x,y,size) {
+
+        // If lastX is not set, set lastX and lastY to the current position 
+        if (lastX==-1) {
+            lastX=x;
+	    lastY=y;
+        }
+
+        // Let's use black by setting RGB values to 0, and 255 alpha (completely opaque)
+        r=0; g=0; b=0; a=255;
+
+        // Select a fill style
+        ctx.strokeStyle = "rgba("+r+","+g+","+b+","+(a/255)+")";
+
+        // Set the line "cap" style to round, so lines at different angles can join into each other
+        ctx.lineCap = "round";
+        //ctx.lineJoin = "round";
+
+
+        // Draw a filled line
+        ctx.beginPath();
+
+        // First, move to the old (previous) position
+        ctx.moveTo(lastX,lastY);
+
+        // Now draw a line to the current touch/pointer position
+        ctx.lineTo(x,y);
+
+        // Set the line thickness and draw the line
+        ctx.lineWidth = size;
+        ctx.stroke();
+
+        ctx.closePath();
+
+        // Update the last position to reference the current position
+        lastX=x;
+        lastY=y;
+    } 
+
+    // Clear the canvas context using the canvas width and height
+    function clearCanvas(canvas,ctx) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    // Keep track of the mouse button being pressed and draw a dot at current location
+    function sketchpad_mouseDown() {
+        mouseDown=1;
+        drawLine(ctx,mouseX,mouseY,8);
+    }
+
+    // Keep track of the mouse button being released
+    function sketchpad_mouseUp() {
+        mouseDown=0;
+
+        // Reset lastX and lastY to -1 to indicate that they are now invalid, since we have lifted the "pen"
+        lastX=-1;
+        lastY=-1;
+    }
+
+    // Keep track of the mouse position and draw a dot if mouse button is currently pressed
+    function sketchpad_mouseMove(e) { 
+        // Update the mouse co-ordinates when moved
+        getMousePos(e);
+
+        // Draw a dot if the mouse button is currently being pressed
+        if (mouseDown==1) {
+            drawLine(ctx,mouseX,mouseY,8);
+        }
+    }
+
+    // Get the current mouse position relative to the top-left of the canvas
+    function getMousePos(e) {
+        if (!e)
+            var e = event;
+
+        if (e.offsetX) {
+            mouseX = e.offsetX;
+            mouseY = e.offsetY;
+        }
+        else if (e.layerX) {
+            mouseX = e.layerX;
+            mouseY = e.layerY;
+        }
+    }
+
+    // Set-up the canvas and add our event handlers after the page has loaded
+    function init() {
+        // Get the specific canvas element from the HTML document
+        canvas = document.getElementById('sketchpad');
+
+        // If the browser supports the canvas tag, get the 2d drawing context for this canvas
+        if (canvas.getContext)
+            ctx = canvas.getContext('2d');
+
+        // Check that we have a valid context to draw on/with before adding event handlers
+        if (ctx) {
+            // React to mouse events on the canvas, and mouseup on the entire document
+            canvas.addEventListener('mousedown', sketchpad_mouseDown, false);
+            canvas.addEventListener('mousemove', sketchpad_mouseMove, false);
+            window.addEventListener('mouseup', sketchpad_mouseUp, false);
+    }
+
+        resBox = document.getElementById("resultbox");
+        if (resBox.getContext)
+            ctx2 = resBox.getContext('2d');
+    }
+
+    function displayResult(text) {
+        var c = document.getElementById("resultbox");
+        var ctx = c.getContext("2d");
+        ctx.font = "200px Arial";
+        ctx.textAlign="center";
+        ctx.textBaseline = 'middle';
+        ctx.fillText(text,200,150);
+    }
+
+    function copy(ctx) {
+        var imgData = ctx.getImageData(10, 10, 50, 50);
+        ctx.putImageData(imgData, 10, 70);
+        imgData
+    }
+
+    function processPixels(canvas,ctx) {
+        var imgData=ctx.getImageData(0, 0, canvas.width, canvas.height);
+        var grayscalePixels = [];
+        for (var i=0;i<imgData.data.length;i+=4)
+        {
+            grayscalePixels.push(imgData.data[i+3]);
+        }
+
+        return grayscalePixels;
+
+    }
+
+    function hiddenOutput(canvas, ctx) {
+        grayscalePixels = processPixels(canvas,ctx);
+        hiddenBox = document.getElementById("hidden_box")
+        hiddenBox.value = grayscalePixels
+    }
+
+
+    function alterCanvas() {
+        var canvas = document.getElementById('sketchpad');
+        var canvasWidth  = canvas.width;
+        var canvasHeight = canvas.height;
+        var ctx = canvas.getContext('2d');
+        var imageData = ctx.getImageData(0, 0, canvasWidth, canvasHeight);
+
+        var buf = new ArrayBuffer(imageData.data.length);
+        var buf8 = new Uint8ClampedArray(buf);
+        var data = new Uint8Array(buf);
+
+        for (var i = 0; i < imageData.data.length; i+=4) {
+            data[i] = 255;
+            data[i+1] = data[i+2] = 0;
+            data[i+3] = imageData.data[i+3];
+        }
+
+        imageData.data.set(buf8);
+        ctx.putImageData(imageData, 0, 0);
+    }
+
+
+    function processImage() {
+        var canvas = document.getElementById('sketchpad');
+        var canvasWidth  = canvas.width;
+        var canvasHeight = canvas.height;
+        var ctx = canvas.getContext('2d');
+        var imageData = ctx.getImageData(0, 0, canvasWidth, canvasHeight);
+
+        var l = canvasWidth, w = canvasHeight;
+        var base = 28;
+
+        var buf = new ArrayBuffer(base*base*4);
+        var buf8 = new Uint8ClampedArray(buf);
+        var data = new Uint8Array(buf);
+
+        var temp = []
+        for (var i = 0; i < imageData.data.length; i+=4) {
+            temp.push(imageData.data[i+3]);
+        }
+
+        console.log(temp);
+
+        var temp2 = []
+        // for(var row_idx = 0; row_idx <= w/b - 1; row_idx++) {
+        //     row = row_idx*l*b;
+        //     console.log(row);
+        //     for (var i = row; i <= row + b*(l/b - 1); i += b) {
+        //         console.log(i);
+        //         var sum = 0;
+        //         for (var j = 0; j <= b -1; j++) {
+        //             for (var k = 0; k <= b - 1; k++) {
+        //                 console.log(j, k, i + j*l + k);
+        //                 sum += temp[i + j*l + k];
+        //             }
+        //         }
+        //         if (sum > 0) {
+        //             temp2.push(255);
+        //         }
+        //         else {
+        //             temp2.push(0);
+        //         }
+        //     }
+        // }
+
+        console.log(temp);
+
+        for (var i = 0; i < base*base*4; i+=4) {
+            data[i] = data[i+1] = data[i+2] = 0;
+            data[i+3] = temp2[i/4]
+        }
+
+        
+        imageData.data.set(buf8);
+        ctx.putImageData(imageData, 0, 0);
+    }
+
+
+
+
+</script>
+
+<style>
+
+/* Some CSS styling */
+#sketchpadapp {
+    /* Prevent nearby text being highlighted when accidentally dragging mouse outside confines of the canvas */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.leftside {
+    float:left;
+    width:220px;
+    height:285px;
+    background-color:#def;
+    padding:10px;
+    border-radius:4px;
+}
+.rightside {
+    float:left;
+    margin-left:100px;
+    margin-top:200px;
+}
+
+.resultboxposition {
+    float:left;
+    margin-left:250px;
+    margin-top:275px;
+}
+
+/*positioning the clear canvas button*/
+.clearbuttonposition {
+    float:left;
+    margin-left:400px;
+    margin-top:250px;
+}
+
+/*positioning the recognize button*/
+.recognizebuttonposition {
+    float:left;
+    margin-left:-400px;
+    margin-top:350px;
+}
+
+/*defining style for the canvas*/
+#sketchpad {
+    float:left;
+    height:196px;
+    width:196px;
+    border:2px solid #888;
+    border-radius:4px;
+    position:relative; /* Necessary for correct mouse co-ords in Firefox */
+}
+
+/*defining the style for the result box*/
+#resultbox {
+    float:left;
+    height:150px;
+    width:200px;
+    border:2px solid #888;
+    border-radius:4px;
+    position:relative; /* Necessary for correct mouse co-ords in Firefox */
+}
+
+/*defining the style for the result box*/
+#processedImage {
+    float:left;
+    height:28px;
+    width:28px;
+    border:2px solid #888;
+    border-radius:4px;
+    position:relative; /* Necessary for correct mouse co-ords in Firefox */
+}
+
+/*defining style for the clear canvas button*/
+#clearbutton {
+    font-size: 15px;
+    padding: 10px;
+    -webkit-appearance: none;
+    background: #eee;
+    border: 1px solid #888;
+}
+
+/*defining style for the recognize button*/
+#recognizebutton {
+    font-size: 15px;
+    padding: 10px;
+    -webkit-appearance: none;
+    background: white;
+    /*border: 1px solid #888;*/
+}
+
+</style>
 
 </head>
 
@@ -10,25 +346,38 @@
 
     <div id="sketchpadapp">
         <div class="rightside">
-            <canvas id="sketchpad" height="300" width="400"/>
+            <canvas id="sketchpad" height="196" width="196"/>
         </div>
     </div>
 
-    <div class="resultboxposition">
+    <!-- <div class="resultboxposition">
         <canvas id="resultbox" height="300" width="400"/>
-    </div>
+    </div> -->
 
     <div class="clearbuttonposition">
-        <input type="submit" value="Clear Sketchpad" id="clearbutton" onclick="clearCanvas(canvas,ctx);">
+        <input type="submit" value="Clear Sketchpad" id="clearbutton" onclick="clearCanvas(canvas,ctx); clearCanvas(resBox,ctx2);">
     </div>
 
     <div class="recognizebuttonposition">
-        <input type=image src=arrow2.png height = 100px width = 150px alt="Submit feedback" value="Recognize!" id="recognizebutton" onclick="downloadCanvas(canvas);">
+        <form action = "http://localhost:5000/recognize" method = "get">
+            <p><input type = "submit" value = "recognize" onclick="hiddenOutput(canvas,ctx);" id="btn1"></p>
+            <p><input type = "text" value = "hidden" name = "hiddenBox" id="hidden_box" style="display: none"></p>
+        </form>
     </div>
+
+
+    <!-- <input type="submit" value="Alter Canvas" id="alter" onclick="alterCanvas();"> -->
+
+
+
+    <!-- <input type="submit" value="Process Image" id="processImage" onclick="processImage();">
+    <canvas id="processedImage" height="28" width="28"/> -->
+
+    <!-- <div class="recognizebuttonposition">
+        <input type=image src=arrow2.png height = 100px width = 150px alt="Submit feedback" value="Recognize!" id="recognizebutton" onclick="downloadCanvas(canvas);">
+    </div> -->
     
+
 </body>
-
-<script type="text/javascript" src="webapp.js"></script>
-
 </html>
 
