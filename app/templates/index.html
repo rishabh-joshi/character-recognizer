@@ -360,10 +360,14 @@
 
     <div class="recognizebuttonposition">
         <form action = "http://localhost:5000/recognize" method = "get">
-            <p><input type = "submit" value = "recognize" onclick="hiddenOutput(canvas,ctx);" id="btn1"></p>
+            <p><input type = "submit" value = "Recognize" onclick="hiddenOutput(canvas,ctx);" id="btn1"></p>
             <p><input type = "text" value = "hidden" name = "hiddenBox" id="hidden_box" style="display: none"></p>
         </form>
     </div>
+
+    <form action = "http://localhost:5000/history" method = "get">
+        <p><input type = "submit" value = "View History"></p>
+    </form>
 
 
     <!-- <input type="submit" value="Alter Canvas" id="alter" onclick="alterCanvas();"> -->

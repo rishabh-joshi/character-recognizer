@@ -1,6 +1,27 @@
-from libraries import *
+from flask import Flask, redirect, url_for, request, render_template
+from init import app, db
+from create_db import Prediction
+from showtable import getHtmlTable
 
-# global new_model = load_model('deep_cnn_byclass1.h5')
+import random
+import json
+import re
+
+import pandas as pd
+import numpy as np
+import keras
+from keras.models import Sequential, save_model, load_model
+from keras.layers import Dense, Dropout, Activation, Flatten
+from keras.layers import Conv2D, MaxPooling2D, ZeroPadding2D, GlobalAveragePooling2D
+from keras.utils import to_categorical
+from keras.optimizers import SGD, Adam
+from keras.layers.normalization import BatchNormalization
+from keras.layers.advanced_activations import LeakyReLU
+
+from sklearn.model_selection import cross_val_score, train_test_split
+from sklearn.metrics import confusion_matrix
+
+labels = json.load(open("labels.json"))
 
 
 
@@ -57,7 +78,26 @@ def recognize():
     # output = ", ".join([str(float(i)) for i in re.findall("\\d+.\\d*", output)])
     # output = "Probabilities = " + output
     # output = output + "\n Top 3 Predictions = " + np.array2string(prediction.reshape(num_classes).argsort()[-3:][::-1]).strip('[]').replace(" ", ", ")
+    
+        character = prediction
+        # sunlight = float(request.form["sunlight"])
+        # outcome = predict(date,area,genre,visitor,avg_temp,low_temp,precip,wind,sunlight,model_outcome)
+        # visitor_pred = round(max(outcome,0))
+        # print(visitor_pred)
+        instance = Prediction(character=character)
+        db.session.add(instance)
+        db.session.commit()
+    
+    
     return render_template('recognize.html', output = output)
+
+
+@app.route('/history',methods=["GET"])
+def show_hist():
+    db.session.commit()
+    results = db.session.execute('SELECT * FROM PREDICTION;')
+    table = getHtmlTable(results)
+    return render_template("history.html",table=table)
 
 
 if __name__ == '__main__':
