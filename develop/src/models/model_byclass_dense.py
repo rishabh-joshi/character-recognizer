@@ -65,6 +65,10 @@ def read_transform_data(train_file, test_file):
     X_train/=255
     X_test/=255
 
+    # Defining the number of classes in the response variable
+    logging.info("Defining the number of classes in the response variable.")
+    number_of_classes = 62
+
     # One hot encoding the response variable
     logging.info("One hot encoding the response variable.")
     Y_train = to_categorical(Y_train, number_of_classes)
@@ -77,12 +81,12 @@ def read_transform_data(train_file, test_file):
 def build_convnet():
     """Build a dense convolutional neural network model.
 
-	Three steps to create a Convolutional Neural Network
-	1. Add convolution layers
-	2. Add activation function
-	3. Add pooling layers
-	4. Repeat Steps 1,2,3 for adding more hidden layers
-	5. Finally, add a fully connected softmax layer giving the CNN the ability to classify the samples
+    Three steps to create a Convolutional Neural Network
+    1. Add convolution layers
+    2. Add activation function
+    3. Add pooling layers
+    4. Repeat Steps 1,2,3 for adding more hidden layers
+    5. Finally, add a fully connected softmax layer giving the CNN the ability to classify the samples
 
     Returns:
         model (): A convolutional neural network model.
@@ -92,40 +96,40 @@ def build_convnet():
     logging.info("Defining the number of classes in the response variable.")
     number_of_classes = 62
 
-	# Adding the first set of convolutional and pooling layers with ReLu activation
+    # Adding the first set of convolutional and pooling layers with ReLu activation
     logging.info("Adding the first set of convolutional and pooling layers with ReLu activation.")
-	model = Sequential()
-	model.add(Conv2D(64, (3, 3), input_shape=(28,28,1)))
-	model.add(BatchNormalization(axis=-1))
-	model.add(Activation('relu'))
-	model.add(Conv2D(64, (3, 3)))
-	model.add(BatchNormalization(axis=-1))
-	model.add(Activation('relu'))
-	model.add(MaxPooling2D(pool_size=(2,2)))
+    model = Sequential()
+    model.add(Conv2D(64, (3, 3), input_shape=(28,28,1)))
+    model.add(BatchNormalization(axis=-1))
+    model.add(Activation('relu'))
+    model.add(Conv2D(64, (3, 3)))
+    model.add(BatchNormalization(axis=-1))
+    model.add(Activation('relu'))
+    model.add(MaxPooling2D(pool_size=(2,2)))
 
-	# Adding the second set of convolutional and pooling layers with ReLu activation
+    # Adding the second set of convolutional and pooling layers with ReLu activation
     logging.info("Adding the second set of convolutional and pooling layers with ReLu activation.")
-	model.add(Conv2D(128,(3, 3)))
-	model.add(BatchNormalization(axis=-1))
-	model.add(Activation('relu'))
-	model.add(Conv2D(128, (3, 3)))
-	model.add(BatchNormalization(axis=-1))
-	model.add(Activation('relu'))
-	model.add(MaxPooling2D(pool_size=(2,2)))
-	model.add(Flatten())
+    model.add(Conv2D(128,(3, 3)))
+    model.add(BatchNormalization(axis=-1))
+    model.add(Activation('relu'))
+    model.add(Conv2D(128, (3, 3)))
+    model.add(BatchNormalization(axis=-1))
+    model.add(Activation('relu'))
+    model.add(MaxPooling2D(pool_size=(2,2)))
+    model.add(Flatten())
 
-	# Adding fully connected layers with softmax activation and 20% dropout
+    # Adding fully connected layers with softmax activation and 20% dropout
     logging.info("Adding fully connected layers with softmax activation and 0.20 dropout.")
-	model.add(Dense(1024))
-	model.add(BatchNormalization())
-	model.add(Activation('relu'))
-	model.add(Dropout(0.2))
-	model.add(Dense(number_of_classes))
-	model.add(Activation('softmax'))
+    model.add(Dense(1024))
+    model.add(BatchNormalization())
+    model.add(Activation('relu'))
+    model.add(Dropout(0.2))
+    model.add(Dense(number_of_classes))
+    model.add(Activation('softmax'))
 
-	# Compiling the model with categorical crossentropy loss function to handle multiple classes
+    # Compiling the model with categorical crossentropy loss function to handle multiple classes
     logging.info("Compiling the model with categorical crossentropy loss function to handle multiple classes.")
-	model.compile(loss='categorical_crossentropy', optimizer=Adam(), metrics=['accuracy'])
+    model.compile(loss='categorical_crossentropy', optimizer=Adam(), metrics=['accuracy'])
 
     # Returning the completed model
     logging.info("Returning the completed model. Function build_convnet() executed successfully.")
@@ -146,38 +150,38 @@ def train_test(model, X_train, Y_train, X_test, Y_test, model_name):
     """ 
     # Setting the batch size and number of epochs
     logging.info("Setting the batch size and number of epochs.")
-	batch_size=256
-	epochs=10
+    batch_size=256
+    epochs=10
 
     # Training the model on the train data
     logging.info("Training the model on the train data.")
-	model.fit(X_train, Y_train,
-	          batch_size=batch_size,
-	          epochs=epochs,
-	          verbose=1,
-	          validation_data=(X_test, Y_test))
+    model.fit(X_train, Y_train,
+              batch_size=batch_size,
+              epochs=epochs,
+              verbose=1,
+              validation_data=(X_test, Y_test))
 
     # Evaluating the model on the test data
     logging.info("Evaluating the model on the test data.")
-	score = model.evaluate(X_test, Y_test, verbose=1)
-	print('Test score:', score[0])
-	print('Test accuracy:', score[1])
+    score = model.evaluate(X_test, Y_test, verbose=1)
+    print('Test score:', score[0])
+    print('Test accuracy:', score[1])
 
     # Saving the model to disk
     logging.info("Saving the model to disk.")
-	model.save(model_name)
-	logging.info("Function train_test() executed succesfully.")
+    model.save(model_name)
+    logging.info("Function train_test() executed succesfully.")
 
 if __name__ == '__main__':
-	# setting up the logging file and parameters
+    # setting up the logging file and parameters
     log_fmt = '%(asctime)s - %(levelname)s - %(message)s'
     date_fmt = '%m/%d/%Y %I:%M:%S %p'
     logging.basicConfig(filename='model_byclass_dense.log', filemode='w',  level=logging.DEBUG, format = log_fmt, datefmt = date_fmt)
     
     # train and test file locations
-    train_file = "data/emnist-byclass-train.csv"
-	test_file = "data/emnist-byclass-test.csv"
+    train_file = "../../data/emnist-byclass-train.csv"
+    test_file = "../../data/emnist-byclass-test.csv"
 
-	X_train, Y_train, X_test, Y_test = read_transform_data(train_file, test_file)
-	model = build_convnet()
-	train_test(model, X_train, Y_train, X_test, Y_test, 'dense_cnn_byclass.h5')
+    X_train, Y_train, X_test, Y_test = read_transform_data(train_file, test_file)
+    model = build_convnet()
+    train_test(model, X_train, Y_train, X_test, Y_test, 'dense_cnn_byclass.h5')
