@@ -46,8 +46,12 @@ def test_build_convnet_built():
 
 def test_read_transform_data_IOError():
     # checking to see if the train and test file exist or not
-    with pytest.raises(SystemExit):
+    # if the file does not exist then the function will raise a SystemExit exception
+    try:
         read_transform_data(train_file, test_file)
+        assert True
+    except SystemExit:
+        assert False
 
 def test_read_transform_data_train_X_dim():
     # checking the dimensions of the training predictors
@@ -69,7 +73,11 @@ def test_read_transform_data_test_Y_dim():
     # X_train, Y_train, X_test, Y_test = read_transform_data(train_file, test_file)
     assert Y_test.shape[1] == number_of_classes
 
-def test_main_IOError():
-    # checking to see if the train and test file exist or not
-    with pytest.raises(SystemExit)      
-        main(metadata_file_path)
+def test_read_metadata_IOError():
+    # checking to see if the metadata file exists or not
+    # if the file does not exist then the function will raise a SystemExit exception
+    try:
+        read_metadata(metadata_file_path)
+        assert True
+    except SystemExit:
+        assert False

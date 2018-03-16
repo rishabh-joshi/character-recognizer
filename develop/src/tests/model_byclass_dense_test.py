@@ -3,7 +3,7 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath('.'))
 sys.path.append('../../..')
-from develop.src.models.model_balanced_dense import *
+from develop.src.models.model_byclass_dense import *
 
 # reading the metadata file
 metadata_file_path = "../../metadata.yaml"
@@ -14,7 +14,7 @@ train_file = "../../data/" + metadata['train_file']
 test_file = "../../data/" + metadata['test_file']
 
 # defining the number of classes
-number_of_classes = 47
+number_of_classes = 62
 
 # Generating the train and test data to do sanity checking later
 X_train, Y_train, X_test, Y_test = read_transform_data(train_file, test_file)
