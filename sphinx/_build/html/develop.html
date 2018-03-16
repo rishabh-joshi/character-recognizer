@@ -1,0 +1,498 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Convolutional Neural Network Model Building &#8212; Character Recognizer 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Web Application" href="app.html" />
+    <link rel="prev" title="Welcome to Character Recognizer’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-model_balanced_dense">
+<span id="convolutional-neural-network-model-building"></span><h1>Convolutional Neural Network Model Building<a class="headerlink" href="#module-model_balanced_dense" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="model_balanced_dense.build_convnet">
+<code class="descclassname">model_balanced_dense.</code><code class="descname">build_convnet</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#model_balanced_dense.build_convnet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a sparse convolutional neural network model.</p>
+<p>Steps to create a Convolutional Neural Network
+1. Add convolution layers
+2. Add activation function
+3. Add pooling layers
+4. Repeat Steps 1,2,3 for adding more hidden layers
+5. Finally, add a fully connected softmax layer giving the CNN the ability to classify the samples</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A convolutional neural network model.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Keras Sequential Model</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="model_balanced_dense.main">
+<code class="descclassname">model_balanced_dense.</code><code class="descname">main</code><span class="sig-paren">(</span><em>metadata</em><span class="sig-paren">)</span><a class="headerlink" href="#model_balanced_dense.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the train and test data, build, train, evaluate and save the conv net.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>metadata</strong> (<em>file object</em>) &#8211; The file object of the metadata file.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="model_balanced_dense.read_metadata">
+<code class="descclassname">model_balanced_dense.</code><code class="descname">read_metadata</code><span class="sig-paren">(</span><em>metadata_file_path</em><span class="sig-paren">)</span><a class="headerlink" href="#model_balanced_dense.read_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the YAML file containing metadata</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>metadata_file_path</strong> (<em>str</em>) &#8211; The path of the file containing the training data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">File object of the YAML metadata file.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">File Object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="model_balanced_dense.read_transform_data">
+<code class="descclassname">model_balanced_dense.</code><code class="descname">read_transform_data</code><span class="sig-paren">(</span><em>train_file</em>, <em>test_file</em><span class="sig-paren">)</span><a class="headerlink" href="#model_balanced_dense.read_transform_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read in the training and test data and reshape them for the neural network model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>train_file</strong> (<em>str</em>) &#8211; The path of the file containing the training data.</li>
+<li><strong>test_file</strong> (<em>str</em>) &#8211; The path of the file containing the testing data.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A 4-tuple of numpy arrays containing training predictors and response and testing predictors and response respectively.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">tuple</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="model_balanced_dense.train_test">
+<code class="descclassname">model_balanced_dense.</code><code class="descname">train_test</code><span class="sig-paren">(</span><em>model</em>, <em>X_train</em>, <em>Y_train</em>, <em>X_test</em>, <em>Y_test</em>, <em>model_name</em><span class="sig-paren">)</span><a class="headerlink" href="#model_balanced_dense.train_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit the convolutional neural network model on the training data, evaluate on the test data, and save it to disk.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> (<em>Keras model</em>) &#8211; The path of the file containing the training data.</li>
+<li><strong>X_train</strong> (<em>ndarray</em>) &#8211; A numpy array with shape (n,28,28,1) containing the predictors for n images in the train data.</li>
+<li><strong>Y_train</strong> (<em>ndarray</em>) &#8211; A numpy array with shape (n,) containing the response classes for n images in the train data.</li>
+<li><strong>X_test</strong> (<em>ndarray</em>) &#8211; A numpy array with shape (n,28,28,1) containing the predictors for n images in the test data.</li>
+<li><strong>Y_test</strong> (<em>ndarray</em>) &#8211; A numpy array with shape (n,) containing the response classes for n images in the train data.</li>
+<li><strong>model_name</strong> (<em>str</em>) &#8211; The filename to save the keras model to.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="module-model_balanced_sparse"></span><dl class="function">
+<dt id="model_balanced_sparse.build_convnet">
+<code class="descclassname">model_balanced_sparse.</code><code class="descname">build_convnet</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#model_balanced_sparse.build_convnet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a sparse convolutional neural network model.</p>
+<p>Steps to create a Convolutional Neural Network
+1. Add convolution layers
+2. Add activation function
+3. Add pooling layers
+4. Repeat Steps 1,2,3 for adding more hidden layers
+5. Finally, add a fully connected softmax layer giving the CNN the ability to classify the samples</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A convolutional neural network model.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Keras Sequential Model</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="model_balanced_sparse.main">
+<code class="descclassname">model_balanced_sparse.</code><code class="descname">main</code><span class="sig-paren">(</span><em>metadata</em><span class="sig-paren">)</span><a class="headerlink" href="#model_balanced_sparse.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the train and test data, build, train, evaluate and save the conv net.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>metadata</strong> (<em>file object</em>) &#8211; The file object of the metadata file.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="model_balanced_sparse.read_metadata">
+<code class="descclassname">model_balanced_sparse.</code><code class="descname">read_metadata</code><span class="sig-paren">(</span><em>metadata_file_path</em><span class="sig-paren">)</span><a class="headerlink" href="#model_balanced_sparse.read_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the YAML file containing metadata</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>metadata_file_path</strong> (<em>str</em>) &#8211; The path of the file containing the training data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">File object of the YAML metadata file.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">File Object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="model_balanced_sparse.read_transform_data">
+<code class="descclassname">model_balanced_sparse.</code><code class="descname">read_transform_data</code><span class="sig-paren">(</span><em>train_file</em>, <em>test_file</em><span class="sig-paren">)</span><a class="headerlink" href="#model_balanced_sparse.read_transform_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read in the training and test data and reshape them for the neural network model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>train_file</strong> (<em>str</em>) &#8211; The path of the file containing the training data.</li>
+<li><strong>test_file</strong> (<em>str</em>) &#8211; The path of the file containing the testing data.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A 4-tuple of numpy arrays containing training predictors and response and testing predictors and response respectively.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">tuple</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="model_balanced_sparse.train_test">
+<code class="descclassname">model_balanced_sparse.</code><code class="descname">train_test</code><span class="sig-paren">(</span><em>model</em>, <em>X_train</em>, <em>Y_train</em>, <em>X_test</em>, <em>Y_test</em>, <em>model_name</em><span class="sig-paren">)</span><a class="headerlink" href="#model_balanced_sparse.train_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit the convolutional neural network model on the training data, evaluate on the test data, and save it to disk.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> (<em>Keras model</em>) &#8211; The path of the file containing the training data.</li>
+<li><strong>X_train</strong> (<em>ndarray</em>) &#8211; A numpy array with shape (n,28,28,1) containing the predictors for n images in the train data.</li>
+<li><strong>Y_train</strong> (<em>ndarray</em>) &#8211; A numpy array with shape (n,) containing the response classes for n images in the train data.</li>
+<li><strong>X_test</strong> (<em>ndarray</em>) &#8211; A numpy array with shape (n,28,28,1) containing the predictors for n images in the test data.</li>
+<li><strong>Y_test</strong> (<em>ndarray</em>) &#8211; A numpy array with shape (n,) containing the response classes for n images in the train data.</li>
+<li><strong>model_name</strong> (<em>str</em>) &#8211; The filename to save the keras model to.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="module-model_byclass_dense"></span><dl class="function">
+<dt id="model_byclass_dense.build_convnet">
+<code class="descclassname">model_byclass_dense.</code><code class="descname">build_convnet</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#model_byclass_dense.build_convnet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read in the training and test data and reshape them for the neural network model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>train_file</strong> (<em>str</em>) &#8211; The path of the file containing the training data.</li>
+<li><strong>test_file</strong> (<em>str</em>) &#8211; The path of the file containing the testing data.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A convolutional neural network model.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Keras Sequential Model</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="model_byclass_dense.main">
+<code class="descclassname">model_byclass_dense.</code><code class="descname">main</code><span class="sig-paren">(</span><em>metadata</em><span class="sig-paren">)</span><a class="headerlink" href="#model_byclass_dense.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the train and test data, build, train, evaluate and save the conv net.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>metadata</strong> (<em>file object</em>) &#8211; The file object of the metadata file.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="model_byclass_dense.read_metadata">
+<code class="descclassname">model_byclass_dense.</code><code class="descname">read_metadata</code><span class="sig-paren">(</span><em>metadata_file_path</em><span class="sig-paren">)</span><a class="headerlink" href="#model_byclass_dense.read_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the YAML file containing metadata</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>metadata_file_path</strong> (<em>str</em>) &#8211; The path of the file containing the training data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">File object of the YAML metadata file.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">File Object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="model_byclass_dense.read_transform_data">
+<code class="descclassname">model_byclass_dense.</code><code class="descname">read_transform_data</code><span class="sig-paren">(</span><em>train_file</em>, <em>test_file</em><span class="sig-paren">)</span><a class="headerlink" href="#model_byclass_dense.read_transform_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read in the training and test data and reshape them for the neural network model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>train_file</strong> (<em>str</em>) &#8211; The path of the file containing the training data.</li>
+<li><strong>test_file</strong> (<em>str</em>) &#8211; The path of the file containing the testing data.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A 4-tuple of numpy arrays containing training predictors and response and testing predictors and response respectively.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">tuple</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="model_byclass_dense.train_test">
+<code class="descclassname">model_byclass_dense.</code><code class="descname">train_test</code><span class="sig-paren">(</span><em>model</em>, <em>X_train</em>, <em>Y_train</em>, <em>X_test</em>, <em>Y_test</em>, <em>model_name</em><span class="sig-paren">)</span><a class="headerlink" href="#model_byclass_dense.train_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit the convolutional neural network model on the training data, evaluate on the test data, and save it to disk.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> (<em>Keras model</em>) &#8211; The path of the file containing the training data.</li>
+<li><strong>X_train</strong> (<em>ndarray</em>) &#8211; A numpy array with shape (n,28,28,1) containing the predictors for n images in the train data.</li>
+<li><strong>Y_train</strong> (<em>ndarray</em>) &#8211; A numpy array with shape (n,) containing the response classes for n images in the train data.</li>
+<li><strong>X_test</strong> (<em>ndarray</em>) &#8211; A numpy array with shape (n,28,28,1) containing the predictors for n images in the test data.</li>
+<li><strong>Y_test</strong> (<em>ndarray</em>) &#8211; A numpy array with shape (n,) containing the response classes for n images in the train data.</li>
+<li><strong>model_name</strong> (<em>str</em>) &#8211; The filename to save the keras model to.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="module-model_byclass_sparse"></span><dl class="function">
+<dt id="model_byclass_sparse.build_convnet">
+<code class="descclassname">model_byclass_sparse.</code><code class="descname">build_convnet</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#model_byclass_sparse.build_convnet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read in the training and test data and reshape them for the neural network model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>train_file</strong> (<em>str</em>) &#8211; The path of the file containing the training data.</li>
+<li><strong>test_file</strong> (<em>str</em>) &#8211; The path of the file containing the testing data.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A convolutional neural network model.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Keras Sequential Model</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="model_byclass_sparse.main">
+<code class="descclassname">model_byclass_sparse.</code><code class="descname">main</code><span class="sig-paren">(</span><em>metadata</em><span class="sig-paren">)</span><a class="headerlink" href="#model_byclass_sparse.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the train and test data, build, train, evaluate and save the conv net.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>metadata</strong> (<em>file object</em>) &#8211; The file object of the metadata file.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="model_byclass_sparse.read_metadata">
+<code class="descclassname">model_byclass_sparse.</code><code class="descname">read_metadata</code><span class="sig-paren">(</span><em>metadata_file_path</em><span class="sig-paren">)</span><a class="headerlink" href="#model_byclass_sparse.read_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the YAML file containing metadata</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>metadata_file_path</strong> (<em>str</em>) &#8211; The path of the file containing the training data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">File object of the YAML metadata file.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">File Object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="model_byclass_sparse.read_transform_data">
+<code class="descclassname">model_byclass_sparse.</code><code class="descname">read_transform_data</code><span class="sig-paren">(</span><em>train_file</em>, <em>test_file</em><span class="sig-paren">)</span><a class="headerlink" href="#model_byclass_sparse.read_transform_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read in the training and test data and reshape them for the neural network model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>train_file</strong> (<em>str</em>) &#8211; The path of the file containing the training data.</li>
+<li><strong>test_file</strong> (<em>str</em>) &#8211; The path of the file containing the testing data.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A 4-tuple of numpy arrays containing training predictors and response and testing predictors and response respectively.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">tuple</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="model_byclass_sparse.train_test">
+<code class="descclassname">model_byclass_sparse.</code><code class="descname">train_test</code><span class="sig-paren">(</span><em>model</em>, <em>X_train</em>, <em>Y_train</em>, <em>X_test</em>, <em>Y_test</em>, <em>model_name</em><span class="sig-paren">)</span><a class="headerlink" href="#model_byclass_sparse.train_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit the convolutional neural network model on the training data, evaluate on the test data, and save it to disk.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> (<em>Keras model</em>) &#8211; The path of the file containing the training data.</li>
+<li><strong>X_train</strong> (<em>ndarray</em>) &#8211; A numpy array with shape (n,28,28,1) containing the predictors for n images in the train data.</li>
+<li><strong>Y_train</strong> (<em>ndarray</em>) &#8211; A numpy array with shape (n,) containing the response classes for n images in the train data.</li>
+<li><strong>X_test</strong> (<em>ndarray</em>) &#8211; A numpy array with shape (n,28,28,1) containing the predictors for n images in the test data.</li>
+<li><strong>Y_test</strong> (<em>ndarray</em>) &#8211; A numpy array with shape (n,) containing the response classes for n images in the train data.</li>
+<li><strong>model_name</strong> (<em>str</em>) &#8211; The filename to save the keras model to.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to Character Recognizer&#8217;s documentation!</a></li>
+      <li>Next: <a href="app.html" title="next chapter">Web Application</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Rush.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/develop.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
