@@ -22,10 +22,7 @@ def read_transform_data(train_file, test_file):
         test_file (str): The path of the file containing the testing data.
 
     Returns:
-        X_train (ndarray): A numpy array with shape (n,28,28,1) containing the predictors for n images in the train data.  
-        Y_train (ndarray): A numpy array with shape (n,) containing the response classes for n images in the train data.
-        X_test (ndarray): A numpy array with shape (n,28,28,1) containing the predictors for n images in the test data.
-        Y_test (ndarray): A numpy array with shape (n,) containing the response classes for n images in the train data.
+        tuple: A 4-tuple of numpy arrays containing training predictors and response and testing predictors and response respectively.
 
     """
     logging.info('Executing function read_transform_data().')
@@ -92,7 +89,7 @@ def read_transform_data(train_file, test_file):
 def build_convnet():
     """Build a sparse convolutional neural network model.
 
-    Three steps to create a Convolutional Neural Network
+    Steps to create a Convolutional Neural Network
     1. Add convolution layers
     2. Add activation function
     3. Add pooling layers
@@ -100,7 +97,7 @@ def build_convnet():
     5. Finally, add a fully connected softmax layer giving the CNN the ability to classify the samples
 
     Returns:
-        model (): A convolutional neural network model.
+        Keras Sequential Model: A convolutional neural network model.
 
     """
     logging.info('Executing function build_convnet().')
@@ -159,7 +156,6 @@ def train_test(model, X_train, Y_train, X_test, Y_test, model_name):
         Y_test (ndarray): A numpy array with shape (n,) containing the response classes for n images in the train data.
         model_name (str): The filename to save the keras model to.
 
-    Returns:
     """ 
     logging.info('Executing function train_test().')
 
@@ -184,22 +180,21 @@ def train_test(model, X_train, Y_train, X_test, Y_test, model_name):
 
     # Saving the model to disk
     logging.info("Saving the model to disk.")
-    model.save("../../models/" + model_name)
-    logging.info("Function train_test() executed succesfully.")
+    model.save("develop/models/" + model_name)
+    logging.info("Function train_test() executed succesfully.")                                                         
 
-def main(metadata_file_path):
+def main(metadata):
+    """Read the train and test data, build, train, evaluate and save the conv net.
+    
+    Args:
+        metadata (file object): The file object of the metadata file.
+
+    """
     logging.info('Executing function main().')
 
-    # reading and loading metadata from yaml file    
-    try:
-        with open(metadata_file_path,'r') as metadata_file:            
-            metadata = yaml.load(metadata_file)
-    except IOError: 
-        raise SystemExit("The file you are trying to read does not exist: " + metadata_file_path)
-
     # train and test file locations
-    train_file = "../../data/" + metadata['train_file']
-    test_file = "../../data/" + metadata['test_file']
+    train_file = "develop/data/" + metadata['train_file']
+    test_file = "develop/data/" + metadata['test_file']
 
     # defining the model name
     model_name = metadata['model_name']
@@ -214,15 +209,40 @@ def main(metadata_file_path):
     train_test(model, X_train, Y_train, X_test, Y_test, model_name)
     logging.info("Function main() executed successfully.")
 
+def read_metadata(metadata_file_path):
+    """Read the YAML file containing metadata
+    
+    Args:
+        metadata_file_path (str): The path of the file containing the training data.
+
+    Returns:
+        File Object: File object of the YAML metadata file.
+        
+    """
+    logging.info('Executing function read_metadata().')
+
+    # reading and loading metadata from yaml file    
+    try:
+        with open(metadata_file_path,'r') as metadata_file:            
+            metadata = yaml.load(metadata_file)
+    except IOError: 
+        raise SystemExit("The file you are trying to read does not exist: " + metadata_file_path)
+
+    # returning the metadata dictionary
+    logging.info("Function read_metadata() executed successfully.")
+    return metadata
 
 if __name__ == '__main__':
     # setting up the logging file and formats
     log_fmt = '%(asctime)s - %(levelname)s - %(message)s'
     date_fmt = '%m/%d/%Y %I:%M:%S %p'
-    logging.basicConfig(filename='model_balanced_sparse.log', filemode='w',  level=logging.DEBUG, format = log_fmt, datefmt = date_fmt)
+    logging.basicConfig(filename='develop/logs/model_balanced_sparse.log', filemode='w',  level=logging.DEBUG, format = log_fmt, datefmt = date_fmt)
     
     # defining the metadata file path
-    metadata_file_path = "../../metadata.yaml"
+    metadata_file_path = "develop/metadata.yaml"
+
+    # reading the metadata file
+    metadata = read_metadata(metadata_file_path)
 
     # calling the main function
-    main(metadata_file_path)
+    main(metadata)

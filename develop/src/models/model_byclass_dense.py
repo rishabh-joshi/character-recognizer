@@ -1,3 +1,4 @@
+import keras
 from keras.datasets import mnist
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, Flatten
@@ -11,8 +12,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import logging
-import os, sys
-sys.path.append('../')
+import yaml
 
 def read_transform_data(train_file, test_file):
     """Read in the training and test data and reshape them for the neural network model.
@@ -22,16 +22,24 @@ def read_transform_data(train_file, test_file):
         test_file (str): The path of the file containing the testing data.
 
     Returns:
-        X_train (ndarray): A numpy array with shape (n,28,28,1) containing the predictors for n images in the train data.  
-        Y_train (ndarray): A numpy array with shape (n,) containing the response classes for n images in the train data.
-        X_test (ndarray): A numpy array with shape (n,28,28,1) containing the predictors for n images in the test data.
-        Y_test (ndarray): A numpy array with shape (n,) containing the response classes for n images in the train data.
+        tuple: A 4-tuple of numpy arrays containing training predictors and response and testing predictors and response respectively.
 
-    """    
+    """
+    logging.info('Executing function read_transform_data().')
+
     # reading the train and test data
     logging.info('Reading training and testing data.')
-    train = pd.read_csv(train_file, header = None)
-    test = pd.read_csv(test_file, header = None)
+    try:
+        with open(train_file,'r') as f:
+            train = pd.read_csv(train_file, header = None)
+    except IOError: 
+        raise SystemExit("The file you are trying to read does not exist: " + train_file)
+
+    try:
+        with open(test_file,'r') as f:
+            test = pd.read_csv(test_file, header = None)
+    except IOError: 
+        raise SystemExit("The file you are trying to read does not exist: " + test_file)
 
     # separate out the train data from the response variable
     logging.info('Separating out the train data from the response variable.')
@@ -79,19 +87,18 @@ def read_transform_data(train_file, test_file):
     return X_train, Y_train, X_test, Y_test
 
 def build_convnet():
-    """Build a dense convolutional neural network model.
-
-    Three steps to create a Convolutional Neural Network
-    1. Add convolution layers
-    2. Add activation function
-    3. Add pooling layers
-    4. Repeat Steps 1,2,3 for adding more hidden layers
-    5. Finally, add a fully connected softmax layer giving the CNN the ability to classify the samples
+    """Read in the training and test data and reshape them for the neural network model.
+    
+    Args:
+        train_file (str): The path of the file containing the training data.
+        test_file (str): The path of the file containing the testing data.
 
     Returns:
-        model (): A convolutional neural network model.
+        Keras Sequential Model: A convolutional neural network model.
 
     """
+    logging.info('Executing function build_convnet().')
+
     # Defining the number of classes in the response variable
     logging.info("Defining the number of classes in the response variable.")
     number_of_classes = 62
@@ -146,8 +153,9 @@ def train_test(model, X_train, Y_train, X_test, Y_test, model_name):
         Y_test (ndarray): A numpy array with shape (n,) containing the response classes for n images in the train data.
         model_name (str): The filename to save the keras model to.
 
-    Returns:
     """ 
+    logging.info('Executing function train_test().')
+
     # Setting the batch size and number of epochs
     logging.info("Setting the batch size and number of epochs.")
     batch_size=256
@@ -169,19 +177,69 @@ def train_test(model, X_train, Y_train, X_test, Y_test, model_name):
 
     # Saving the model to disk
     logging.info("Saving the model to disk.")
-    model.save(model_name)
-    logging.info("Function train_test() executed succesfully.")
+    model.save("develop/models/" + model_name)
+    logging.info("Function train_test() executed succesfully.")                                                         
+
+def main(metadata):
+    """Read the train and test data, build, train, evaluate and save the conv net.
+    
+    Args:
+        metadata (file object): The file object of the metadata file.
+
+    """
+    logging.info('Executing function main().')
+
+    # train and test file locations
+    train_file = "develop/data/" + metadata['train_file']
+    test_file = "develop/data/" + metadata['test_file']
+
+    # defining the model name
+    model_name = metadata['model_name']
+
+    # creating the training and testing set
+    X_train, Y_train, X_test, Y_test = read_transform_data(train_file, test_file)
+
+    # building the model
+    model = build_convnet()
+
+    # training, evaluating, and saving the model
+    train_test(model, X_train, Y_train, X_test, Y_test, model_name)
+    logging.info("Function main() executed successfully.")
+
+def read_metadata(metadata_file_path):
+    """Read the YAML file containing metadata
+    
+    Args:
+        metadata_file_path (str): The path of the file containing the training data.
+
+    Returns:
+        File Object: File object of the YAML metadata file.
+        
+    """
+    logging.info('Executing function read_metadata().')
+
+    # reading and loading metadata from yaml file    
+    try:
+        with open(metadata_file_path,'r') as metadata_file:            
+            metadata = yaml.load(metadata_file)
+    except IOError: 
+        raise SystemExit("The file you are trying to read does not exist: " + metadata_file_path)
+
+    # returning the metadata dictionary
+    logging.info("Function read_metadata() executed successfully.")
+    return metadata
 
 if __name__ == '__main__':
-    # setting up the logging file and parameters
+    # setting up the logging file and formats
     log_fmt = '%(asctime)s - %(levelname)s - %(message)s'
     date_fmt = '%m/%d/%Y %I:%M:%S %p'
-    logging.basicConfig(filename='model_byclass_dense.log', filemode='w',  level=logging.DEBUG, format = log_fmt, datefmt = date_fmt)
+    logging.basicConfig(filename='develop/logs/model_byclass_dense.log', filemode='w',  level=logging.DEBUG, format = log_fmt, datefmt = date_fmt)
     
-    # train and test file locations
-    train_file = "../../data/emnist-byclass-train.csv"
-    test_file = "../../data/emnist-byclass-test.csv"
+    # defining the metadata file path
+    metadata_file_path = "develop/metadata.yaml"
 
-    X_train, Y_train, X_test, Y_test = read_transform_data(train_file, test_file)
-    model = build_convnet()
-    train_test(model, X_train, Y_train, X_test, Y_test, 'dense_cnn_byclass.h5')
+    # reading the metadata file
+    metadata = read_metadata(metadata_file_path)
+
+    # calling the main function
+    main(metadata)
