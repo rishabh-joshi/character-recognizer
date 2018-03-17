@@ -30,11 +30,11 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def home_page():
-    num = random.randint(1,100)
-    return render_template('index.html', res = num)
+    # redirect("127.0.0.1/5000")
+    return render_template('index.html', output="")
 
 
-@app.route('/recognize', methods=['GET'])
+@app.route('/recognize', methods=['POST'])
 def recognize():
     """View that process a POST with new song input
 
@@ -45,7 +45,8 @@ def recognize():
     base = 28
     num_classes = 62
     factor = int(size/base)
-    list = request.args.get('hiddenBox')
+    # list = request.args.get('hiddenBox')
+    list = request.form["hiddenBox"]
     large_image = np.array([float(elem) for elem in list.split(',')]).reshape(size,size)
     small_image = np.zeros(base*base).reshape(base, base)
 
@@ -80,6 +81,7 @@ def recognize():
         # db.session.add(instance)
         # db.session.commit()
     
+    # return redirect(request.path,code=302)
     
     return render_template('recognize.html', output = output)
 
@@ -93,5 +95,5 @@ def show_history():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port = 5000, debug=True)
-    # app.run(debug = True)
+    # app.run(host='0.0.0.0', port = 5000, debug=True)
+    app.run(debug = True)
