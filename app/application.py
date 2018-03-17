@@ -1,5 +1,5 @@
 from flask import Flask, redirect, url_for, request, render_template
-from init import app, db
+from __init__ import app, db
 from create_db import Prediction
 from showtable import getHtmlTable
 

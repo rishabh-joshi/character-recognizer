@@ -1,4 +1,4 @@
-from init import db
+from __init__ import db
 
 def create_db():
     db.create_all()
