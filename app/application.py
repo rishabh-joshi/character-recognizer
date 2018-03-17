@@ -28,7 +28,7 @@ labels = json.load(open("app/labels.json"))
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def home_page():
     num = random.randint(1,100)
     return render_template('index.html', res = num)
