@@ -72,10 +72,10 @@ def recognize():
         output = "Predicted " + prediction + "!"
 
         # # Uncomment the following lines for saving the prediction results in RDS
-        # character = prediction
-        # instance = Prediction(character=character)
-        # db.session.add(instance)
-        # db.session.commit()
+        character = prediction
+        instance = Prediction(character=character)
+        db.session.add(instance)
+        db.session.commit()
     
     # return redirect(request.path,code=302)
     
@@ -91,5 +91,5 @@ def show_history():
 
 
 if __name__ == '__main__':
-    # app.run(host='0.0.0.0', port = 5000, debug=True)
-    app.run(debug = True)
+    app.run(host='0.0.0.0', port = 5000, debug=True)
+    # app.run(debug = True)
