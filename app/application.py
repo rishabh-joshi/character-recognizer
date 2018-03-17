@@ -24,10 +24,6 @@ from sklearn.metrics import confusion_matrix
 labels = json.load(open("app/labels.json"))
 
 
-
-
-app = Flask(__name__)
-
 @app.route('/', methods=['GET'])
 def home_page():
     # redirect("127.0.0.1/5000")
