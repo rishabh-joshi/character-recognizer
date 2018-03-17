@@ -7,7 +7,7 @@ import click
 @click.argument('database')
 
 def writeCredential(username,password,dbaddress,database):
-    file = open("db_credential.txt","w")
+    file = open("config","w")
     file.write(username+","+password+","+dbaddress+","+database)
     print("credential updated succesfully!")
 

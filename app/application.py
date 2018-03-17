@@ -21,7 +21,7 @@ from keras.layers.advanced_activations import LeakyReLU
 from sklearn.model_selection import cross_val_score, train_test_split
 from sklearn.metrics import confusion_matrix
 
-labels = json.load(open("labels.json"))
+labels = json.load(open("app/labels.json"))
 
 
 
@@ -64,7 +64,7 @@ def recognize():
     small_image = small_image.reshape(base*base)
 
 
-    new_model = load_model('../develop/models/deep_cnn_byclass1.h5') 
+    new_model = load_model('develop/models/sparse_cnn_byclass.h5') 
     input = np.array(small_image).reshape(1,28,28,1)/255
     prediction = new_model.predict(input)
     prediction = str(prediction.reshape(num_classes).argsort()[-1])
@@ -74,26 +74,18 @@ def recognize():
     else:
         output = "Predicted " + prediction + "!"
 
-    # output = np.array2string(np.round(prediction, 3)).strip('[]')
-    # output = ", ".join([str(float(i)) for i in re.findall("\\d+.\\d*", output)])
-    # output = "Probabilities = " + output
-    # output = output + "\n Top 3 Predictions = " + np.array2string(prediction.reshape(num_classes).argsort()[-3:][::-1]).strip('[]').replace(" ", ", ")
-    
-        character = prediction
-        # sunlight = float(request.form["sunlight"])
-        # outcome = predict(date,area,genre,visitor,avg_temp,low_temp,precip,wind,sunlight,model_outcome)
-        # visitor_pred = round(max(outcome,0))
-        # print(visitor_pred)
-        instance = Prediction(character=character)
-        db.session.add(instance)
-        db.session.commit()
+        # # Uncomment the following lines for saving the prediction results in RDS
+        # character = prediction
+        # instance = Prediction(character=character)
+        # db.session.add(instance)
+        # db.session.commit()
     
     
     return render_template('recognize.html', output = output)
 
 
 @app.route('/history',methods=["GET"])
-def show_hist():
+def show_history():
     db.session.commit()
     results = db.session.execute('SELECT * FROM PREDICTION;')
     table = getHtmlTable(results)
@@ -101,6 +93,5 @@ def show_hist():
 
 
 if __name__ == '__main__':
-    # new_model = load_model('deep_cnn_byclass1.h5')
-    # app.run(host='0.0.0.0', debug=True)ed
-    app.run(debug = True)
+    app.run(host='0.0.0.0', port = 5000, debug=True)
+    # app.run(debug = True)

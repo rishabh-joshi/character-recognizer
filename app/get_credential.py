@@ -1,5 +1,5 @@
 def get_credential():
-    file = open('db_credential.txt','r')
+    file = open('config','r')
     credential = file.read()
     username = credential.split(",")[0]
     password = credential.split(",")[1]

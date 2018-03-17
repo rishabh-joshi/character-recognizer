@@ -17,7 +17,10 @@
         <table style="margin:auto;color:white;background-color: rgba(110, 77, 40,1);">
             {{table}}
         </table><hr>
-        <!-- <a target="_blank" href={{url_for('homepage')}} style="text-align:center;color:black;padding:30px;margin:auto;">Back to Main Page</a> -->
+
+        <form action = "{{ url_for('home_page') }}">
+            <p><input type = "submit" value = "Back"></p>
+        </form>
         
   </div>
 
