@@ -85,7 +85,7 @@ def recognize():
 @app.route('/history',methods=["GET"])
 def show_history():
     db.session.commit()
-    results = db.session.execute('SELECT * FROM PREDICTION ORDER BY DESC id LIMIT 5;')
+    results = db.session.execute('SELECT * FROM PREDICTION ORDER BY id DESC LIMIT 5;')
     table = getHtmlTable(results)
     return render_template("history.html",table=table)
 
