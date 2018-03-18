@@ -13,8 +13,8 @@ class dataTable(Table):
         character (Col): Column storing the predicted user drawn character.
 
     """
-    id = Col("id")
-    character = Col('character')
+    Entry = Col("Entry")
+    Character = Col('Character')
 
 class dataRow:
     """A class to store a row in the table in the database.
@@ -31,8 +31,8 @@ class dataRow:
             row (list): List id and character in one row.
 
         """
-        self.id = row[0]
-        self.character = row[1]
+        self.Entry = row[0]
+        self.Character = row[1]
 
 def getHtmlTable(queryResult):
     result = []
