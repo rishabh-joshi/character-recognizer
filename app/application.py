@@ -73,7 +73,7 @@ def recognize():
 
         # # Uncomment the following lines for saving the prediction results in RDS
         character = prediction
-        instance = Prediction(Character=character)
+        instance = Prediction(character=character)
         db.session.add(instance)
         db.session.commit()
     
@@ -85,7 +85,7 @@ def recognize():
 @app.route('/history',methods=["GET"])
 def show_history():
     db.session.commit()
-    results = db.session.execute('SELECT * FROM PREDICTION ORDER BY Entry LIMIT 5;')
+    results = db.session.execute('SELECT * FROM PREDICTION ORDER BY id LIMIT 5;')
     table = getHtmlTable(results)
     return render_template("history.html",table=table)
 
