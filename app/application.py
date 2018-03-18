@@ -67,9 +67,9 @@ def recognize():
     prediction = str(prediction.reshape(num_classes).argsort()[-1])
     prediction = labels[prediction]
     if prediction == 'null' : 
-        output = "Failed to recognize, try again!"
+        output = "Failed to recognize!"
     else:
-        output = "Predicted " + prediction + "!"
+        output = prediction
 
         # # Uncomment the following lines for saving the prediction results in RDS
         character = prediction

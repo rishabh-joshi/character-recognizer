@@ -2,8 +2,6 @@
 <head>
 <title>Character Recognizer</title>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
 <script type="text/javascript">
     // Variables for referencing the canvas and 2dcanvas context
     var canvas,ctx;
@@ -29,7 +27,7 @@
         }
 
         // Let's use black by setting RGB values to 0, and 255 alpha (completely opaque)
-        r=0; g=0; b=0; a=255;
+        r=123; g=12; b=35; a=255;
 
         // Select a fill style
         ctx.strokeStyle = "rgba("+r+","+g+","+b+","+(a/255)+")";
@@ -248,7 +246,7 @@
 /* Background Image*/
 .bg{
        /* The image used */
-       background-image: url("../static/Bleached-Wood-Blank-Tablet-Coffee-Cup-Beige.jpg");
+       background-image: url("../static/Bleached-Wood-Blank-Tablet-Coffee-Cup-Beige-title.jpg");
        /*background-image: url("{{ url_for('static',filename='images/lalaland.jpg') }}");*/
        /* Full height */
        height: 100%;
@@ -279,8 +277,8 @@
 }
 .rightside {
     float:left;
-    margin-left:100px;
-    margin-top:200px;
+    margin-left:350px;
+    margin-top:300px;
 }
 
 .resultboxposition {
@@ -351,13 +349,52 @@
     /*border: 1px solid #888;*/
 }
 
+#myBtn {
+    width: 10%;
+    font-family: 'Lato', sans-serif; 
+    font-size: 13px;
+    padding: 10px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: black;
+    cursor: pointer;
+    margin-left:75px;
+    /*margin-top:350px;*/
+}
+
+#myBtnHist {
+    width: 10%;
+    font-family: 'Lato', sans-serif; 
+    font-size: 13px;
+    padding: 10px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: black;
+    cursor: pointer;
+    margin-left:75px;
+    /*margin-top:150px;*/
+}
+
+#myBtnRec {
+    width: 10%;
+    font-family: 'Lato', sans-serif; 
+    font-size: 13px;
+    padding: 10px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: black;
+    cursor: pointer;
+    margin-left:75px;
+    margin-top:325px;
+}
+
 </style>
 
 </head>
 
 <body onload="init()">
 
-    <div class = "bg">
+    <div class = "bg"/>
 
         <div id="sketchpadapp">
             <div class="rightside">
@@ -369,22 +406,31 @@
             <canvas id="resultbox" height="300" width="400"/>
         </div> -->
 
-        <div class="clearbuttonposition">
-            <input type="submit" value="Clear Sketchpad" id="clearbutton" onclick="clearCanvas(canvas,ctx); clearCanvas(resBox,ctx2);">
-        </div>
+<!--         <div class="clearbuttonposition">
+            <input type="submit" value="Clear Sketchpad" id="clearbutton" onclick="clearCanvas(canvas,ctx);">
+        </div> -->
 
-        <div class="recognizebuttonposition">
+        <div>
             <form action="{{ url_for('recognize') }}" method = post>
-                <p><input type = "submit" value = "Recognize" onclick="hiddenOutput(canvas,ctx);" id="btn1"></p>
+                <!-- <p><input type = "submit" value = "Recognize" onclick="hiddenOutput(canvas,ctx);"></p> -->
+                <p><button id="myBtnRec" onclick="hiddenOutput(canvas,ctx);">Recognize</button></p>
                 <p><input type = "text" value = "hidden" name = "hiddenBox" id="hidden_box" style="display: none"></p>
             </form>
         </div>
 
-        <form action = "{{ url_for('show_history') }}" method = "get">
+<!--         <form action = "{{ url_for('show_history') }}" method = "get">
             <p><input type = "submit" value = "View History"></p>
         </form>
+ -->
+        <div>
+            <p><button id="myBtn" onclick="clearCanvas(canvas,ctx);">Clear Sketch Pad</button></p>
+        </div>
+        
+        <div>
+            <p><button id="myBtnHist" onclick="hiddenOutput(canvas,ctx); window.location.href='{{ url_for('show_history') }}';">View History</button></p>
+        </div>
 
-    </div>
+    <!-- </div> -->
   <!--   <h1>{{ output }}</h1> --> 
 
 
