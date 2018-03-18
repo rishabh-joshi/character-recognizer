@@ -6,7 +6,7 @@
 /* Background Image*/
 .bg{
        /* The image used */
-       background-image: url("../static/Bleached-Wood-Blank-Tablet-Coffee-Cup.jpg");
+       background-image: url("../static/Bleached-Wood-Blank-Tablet-Coffee-Cup-Beige.jpg");
        /*background-image: url("{{ url_for('static',filename='images/lalaland.jpg') }}");*/
        /* Full height */
        height: 100%;
@@ -15,6 +15,18 @@
        background-repeat: no-repeat;
        background-size: cover;
    }
+
+#myBtn {
+    width: 10%;
+    font-family: 'Lato', sans-serif; 
+    font-size: 13px;
+    padding: 10px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: black;
+    cursor: pointer;
+}
+
 </style>
 
 </head>
@@ -23,16 +35,22 @@
 
 <body>
 
-    <div class="column content">
-        <h1>Historical User Input Data</h1><hr>
-        <table style="margin:auto;color:white;background-color: rgba(110, 77, 40,1);">
-            {{table}}
-        </table><hr>
+    <div class = "bg">
 
-        <form action = "{{ url_for('home_page') }}">
-            <p><input type = "submit" value = "Back"></p>
-        </form>
-        
+      <div class="column content">
+          <h1>Historical User Input Data</h1><hr>
+          <table style="margin:auto;color:white;background-color: rgba(110, 77, 40,1);">
+              {{table}}
+          </table><hr>
+
+          <form action = "{{ url_for('home_page') }}">
+              <p><input type = "submit" value = "Back"></p>
+          </form>
+
+          <button id="myBtn" onclick="window.location.href='{{ url_for('home_page') }}';">Draw Again</button>
+          
+    </div>
+
   </div>
 
 </body>

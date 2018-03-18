@@ -248,7 +248,7 @@
 /* Background Image*/
 .bg{
        /* The image used */
-       background-image: url("../static/Bleached-Wood-Blank-Tablet-Coffee-Cup.jpg");
+       background-image: url("../static/Bleached-Wood-Blank-Tablet-Coffee-Cup-Beige.jpg");
        /*background-image: url("{{ url_for('static',filename='images/lalaland.jpg') }}");*/
        /* Full height */
        height: 100%;
@@ -357,31 +357,34 @@
 
 <body onload="init()">
 
-    <div id="sketchpadapp">
-        <div class="rightside">
-            <canvas id="sketchpad" height="196" width="196"/>
+    <div class = "bg">
+
+        <div id="sketchpadapp">
+            <div class="rightside">
+                <canvas id="sketchpad" height="196" width="196"/>
+            </div>
         </div>
-    </div>
 
-    <!-- <div class="resultboxposition">
-        <canvas id="resultbox" height="300" width="400"/>
-    </div> -->
+        <!-- <div class="resultboxposition">
+            <canvas id="resultbox" height="300" width="400"/>
+        </div> -->
 
-    <div class="clearbuttonposition">
-        <input type="submit" value="Clear Sketchpad" id="clearbutton" onclick="clearCanvas(canvas,ctx); clearCanvas(resBox,ctx2);">
-    </div>
+        <div class="clearbuttonposition">
+            <input type="submit" value="Clear Sketchpad" id="clearbutton" onclick="clearCanvas(canvas,ctx); clearCanvas(resBox,ctx2);">
+        </div>
 
-    <div class="recognizebuttonposition">
-        <form action="{{ url_for('recognize') }}" method = post>
-            <p><input type = "submit" value = "Recognize" onclick="hiddenOutput(canvas,ctx);" id="btn1"></p>
-            <p><input type = "text" value = "hidden" name = "hiddenBox" id="hidden_box" style="display: none"></p>
+        <div class="recognizebuttonposition">
+            <form action="{{ url_for('recognize') }}" method = post>
+                <p><input type = "submit" value = "Recognize" onclick="hiddenOutput(canvas,ctx);" id="btn1"></p>
+                <p><input type = "text" value = "hidden" name = "hiddenBox" id="hidden_box" style="display: none"></p>
+            </form>
+        </div>
+
+        <form action = "{{ url_for('show_history') }}" method = "get">
+            <p><input type = "submit" value = "View History"></p>
         </form>
+
     </div>
-
-    <form action = "{{ url_for('show_history') }}" method = "get">
-        <p><input type = "submit" value = "View History"></p>
-    </form>
-
   <!--   <h1>{{ output }}</h1> --> 
 
 
