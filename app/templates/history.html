@@ -25,6 +25,8 @@
     background: rgba(255, 255, 255, 0.1);
     color: black;
     cursor: pointer;
+    margin-left:75px;
+    margin-top:350px;
 }
 
 </style>
@@ -41,15 +43,10 @@
           <h1>Historical User Input Data</h1><hr>
           <table style="margin:auto;color:white;background-color: rgba(110, 77, 40,1);">
               {{table}}
-          </table><hr>
-
-          <form action = "{{ url_for('home_page') }}">
-              <p><input type = "submit" value = "Back"></p>
-          </form>
-
-          <button id="myBtn" onclick="window.location.href='{{ url_for('home_page') }}';">Draw Again</button>
-          
+          </table><hr>          
     </div>
+
+    <button id="myBtn" onclick="window.location.href='{{ url_for('home_page') }}';">Draw Again</button>
 
   </div>
 
