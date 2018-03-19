@@ -14,3 +14,5 @@
 # exclude data from source control by default
 develop/data/
 
+# ignore the PEM files needed for connecting to ec2
+*.pem
