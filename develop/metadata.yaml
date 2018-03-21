@@ -1,0 +1,3 @@
+train_file : emnist-balanced-train.csv
+test_file : emnist-balanced-test.csv
+model_name : dense_cnn_balanced.h5

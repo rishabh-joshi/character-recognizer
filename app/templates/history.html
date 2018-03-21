@@ -1,0 +1,156 @@
+<html>
+<head>
+<title>Character Recognizer</title>
+
+<style>
+
+    .row {
+        color: #ffffff; 
+        margin: 0;
+        font-family: 'Lato', sans-serif; 
+        font-size: 15px; 
+        font-weight: 300; 
+        line-height: 20px; 
+        margin: 0 0 20px;
+    }
+    .container .content {
+        position: relative;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.1); /* Black background with transparency */
+        color: #D3D3D3;
+        width: 100%;
+        padding: 20px;
+        text-align: center ;
+    }
+    #single:td, #single:th {
+    border: 0px solid #6E4D28;
+    padding: 4.5px;
+    text-align: center;
+    color: #6E4D28;
+    }
+
+    #double1:td, #double1:th {
+    border: 0px solid #ddd;
+    padding: 4.5px;
+    text-align: left;
+    }
+
+    #double2:td, #double2:th {
+    border: 0px solid #ddd;
+    padding: 4.5px;
+    text-align: right;
+    }
+
+    td:not(.th):hover {background-color: #6E4D28;}
+
+    th {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        color: #6E4D28;
+    }
+
+.column {
+    float: left;
+    padding: 15px;
+}
+
+.content {
+    width: 75%;
+}
+
+.content {
+  color:rgb(80,80,80);
+  font-family:Verdana;
+  font-size: 14px;
+}
+.content h1 {
+  font-family:"Palatino Linotype";
+  font-size:30px;
+  color:rgb(110, 77, 40)
+}
+.content form{
+  color:white;
+}
+.content fieldset{
+  background-color:rgba(110, 77, 40,0.5);
+  border:0;
+  margin:10px;
+  font-family:"Times New Roman"
+}
+.content legend{
+  padding:4px;
+  font-size:16px;
+  color:white;
+  text-align:center;
+  background-color:rgb(130, 90, 60);
+  font-family:Verdana;
+}
+.content input, .content select{
+  margin:5px;
+}
+
+/* Background Image*/
+.bg{
+       /* The image used */
+       background-image: url("../static/Bleached-Wood-Blank-Tablet-Coffee-Cup-Beige-title.jpg");
+       /*background-image: url("{{ url_for('static',filename='images/lalaland.jpg') }}");*/
+       /* Full height */
+       height: 100%;
+       /* Center and scale the image nicely */
+       background-position: center;
+       background-repeat: no-repeat;
+       background-size: cover;
+   }
+
+#myBtn {
+    width: 12%;
+    font-family: 'Lato', sans-serif; 
+    font-size: 15px;
+    padding: 10px;
+    border: none;
+    background: rgba(110, 77, 40, 0.2);
+    color: black;
+    cursor: pointer;
+    margin-left:50px;
+    margin-top:350px;
+}
+
+#tableposition {
+    width: 15%;
+    font-family: 'Lato', sans-serif; 
+    font-size: 13px;
+    padding: 10px;
+    border: none;
+    background: rgba(255, 255, 255, 0);
+    color: black;
+    cursor: pointer;
+    margin-left:350px;
+    margin-top:200px;
+}
+
+
+
+</style>
+
+</head>
+
+
+
+<body>
+
+    <div class = "bg">
+
+      <div class="column content" id="tableposition">
+          <h1>Last 5 Inputs</h1><hr>
+          <table class = "row" style="margin:auto;color:white;background-color: rgba(110, 77, 40,1);">
+              {{table}}
+          </table><hr>          
+    </div>
+
+    <button id="myBtn" onclick="window.location.href='{{ url_for('home_page') }}';">Draw Again</button>
+
+  </div>
+
+</body>
+</html>
+
