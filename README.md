@@ -2,7 +2,7 @@
 
 Character recognition project for the course MSiA423: Analytics Value Chain.
 
-- #### Developer: Rishabh Joshi 
+- ### Developer: Rishabh Joshi 
 
 - Product Owner: Lauren Gardiner
 
@@ -28,11 +28,11 @@ Accuracy of classification for the neural network on a pre-determined test set o
 
 ### Dependencies
 
-Dependencies are listed in the [develop/requirements.txt](develop/requirements.txt)
+Dependencies are listed in [requirements.txt](requirements.txt)
 
 ### Documentation
 
-This project was documented using Sphinx and the documentation files can be found in the [develop\docs\_build\html](develop\docs\_build\html) folder.
+This project was documented using Sphinx and the documentation files can be found in the [develop/docs/\_build/html](develop/docs/_build/html) folder.
 
 ### Repository Structure
 
@@ -103,6 +103,6 @@ python36 app/application.py
 15. Check out the app by visiting the IP address that appeared on the consol after the app has been successfully deployed.
 
 
+## Pivotal Tracker Project URL
 
-
-
+[https://www.pivotaltracker.com/n/projects/2142491](https://www.pivotaltracker.com/n/projects/2142491)
