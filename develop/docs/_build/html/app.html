@@ -1,0 +1,331 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Web Application &mdash; Character Recognizer 1.0.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Character Recognizer 1.0.0 documentation" href="index.html"/>
+        <link rel="prev" title="Convolutional Neural Network Model Building" href="develop.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Character Recognizer
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="develop.html">Convolutional Neural Network Model Building</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Web Application</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Character Recognizer</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Web Application</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/app.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-create_db">
+<span id="web-application"></span><h1>Web Application<a class="headerlink" href="#module-create_db" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-showtable"></span><dl class="class">
+<dt id="showtable.dataRow">
+<em class="property">class </em><code class="descclassname">showtable.</code><code class="descname">dataRow</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="headerlink" href="#showtable.dataRow" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class to store a row in the table in the database.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="showtable.dataTable">
+<em class="property">class </em><code class="descclassname">showtable.</code><code class="descname">dataTable</code><span class="sig-paren">(</span><em>items</em>, <em>classes=None</em>, <em>thead_classes=None</em>, <em>sort_by=None</em>, <em>sort_reverse=False</em>, <em>no_items=None</em>, <em>table_id=None</em>, <em>border=None</em>, <em>html_attrs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#showtable.dataTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class to store the entries in a row of a database table.</p>
+<p>The table in the database would store the predicted values of the
+character drawn by the user. This class stores the entries in one
+row of that table. This class inherits from the Table class in
+flask_table module.</p>
+<dl class="attribute">
+<dt id="showtable.dataTable.id">
+<code class="descname">id</code><a class="headerlink" href="#showtable.dataTable.id" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Col</em> &#8211; Unique ID column in the table.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="showtable.dataTable.character">
+<code class="descname">character</code><a class="headerlink" href="#showtable.dataTable.character" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Col</em> &#8211; Column storing the predicted user drawn character.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="showtable.getHtmlTable">
+<code class="descclassname">showtable.</code><code class="descname">getHtmlTable</code><span class="sig-paren">(</span><em>queryResult</em><span class="sig-paren">)</span><a class="headerlink" href="#showtable.getHtmlTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate the HTML code to display a table.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>queryResult</strong> (<em>ResultProxy</em>) &#8211; A <cite>ResultProxy</cite> representing results of an SQL statement execution.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The HTML code for the given table.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="module-helper"></span><dl class="function">
+<dt id="helper.compress_image">
+<code class="descclassname">helper.</code><code class="descname">compress_image</code><span class="sig-paren">(</span><em>pixel_list</em>, <em>size</em>, <em>base</em><span class="sig-paren">)</span><a class="headerlink" href="#helper.compress_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a list of pixels into a size x size image and compress it into a base x base image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pixel_list</strong> (<em>str</em>) &#8211; A comma separated string containing pixel values.</li>
+<li><strong>size</strong> (<em>int</em>) &#8211; Height and width of the image corresponding to the pixel list.</li>
+<li><strong>base</strong> (<em>int</em>) &#8211; Height and width of the compressed image.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A base x base 2d numpy array corresponding to the compressed image.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="helper.predict_character">
+<code class="descclassname">helper.</code><code class="descname">predict_character</code><span class="sig-paren">(</span><em>model_path</em>, <em>image</em><span class="sig-paren">)</span><a class="headerlink" href="#helper.predict_character" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict the character drawn in a 28x28 grayscale image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>model_path</strong> (<em>str</em>) &#8211; Path to the model file used to load the keras model.</li>
+<li><strong>image</strong> (<em>numpy.ndarray</em>) &#8211; A 28 x 28 numpy array with the grayscale pixel values of the image.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The predicted character or the string &#8220;Failed to recognize!&#8221; if no match found.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="helper.read_metadata">
+<code class="descclassname">helper.</code><code class="descname">read_metadata</code><span class="sig-paren">(</span><em>metadata_file_path</em><span class="sig-paren">)</span><a class="headerlink" href="#helper.read_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the YAML file containing metadata</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>metadata_file_path</strong> (<em>str</em>) &#8211; The path of the file containing the training data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">File object of the YAML metadata file.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">File Object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="helper.store_prediction">
+<code class="descclassname">helper.</code><code class="descname">store_prediction</code><span class="sig-paren">(</span><em>prediction</em><span class="sig-paren">)</span><a class="headerlink" href="#helper.store_prediction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store the predicted character in the database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>prediction</strong> (<em>str</em>) &#8211; The predicted character to be stored in the database.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="develop.html" class="btn btn-neutral" title="Convolutional Neural Network Model Building" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Rishabh Joshi.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
