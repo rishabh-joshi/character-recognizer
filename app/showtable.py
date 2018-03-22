@@ -1,8 +1,9 @@
 from flask_table import Table, Col
 
-class dataTable(Table):
+
+class DataTable(Table):
     """A class to store the entries in a row of a database table.
-    
+
     The table in the database would store the predicted values of the
     character drawn by the user. This class stores the entries in one
     row of that table. This class inherits from the Table class in
@@ -16,8 +17,10 @@ class dataTable(Table):
     id = Col("id")
     character = Col('character')
 
-class dataRow:
+
+class DataRow:
     """A class to store a row in the table in the database."""
+
     def __init__(self, row):
         """Constructor for dataRow
 
@@ -28,20 +31,25 @@ class dataRow:
         self.id = row[0]
         self.character = row[1]
 
-def getHtmlTable(queryResult):
+
+def get_html_table(query_result):
     """Generate the HTML code to display a table.
-    
+
     Args:
-        queryResult (ResultProxy): A `ResultProxy` representing results of an SQL statement execution.
+        query_result (ResultProxy): A `ResultProxy` representing results of an SQL statement execution.
 
     Returns:
         str: The HTML code for the given table.
 
     """
+    # fetch all the rows from the query
     result = []
-    for queryRow in queryResult:
-        result.append(queryRow)
-    rows = [dataRow(row) for row in result]
-    table = dataTable(rows)
-    # print(table.__html__())
+    for query_row in query_result:
+        result.append(query_row)
+
+    # create DataRow objects from all the rows
+    rows = [DataRow(row) for row in result]
+
+    # generate the HTML code for the table
+    table = DataTable(rows)
     return table
