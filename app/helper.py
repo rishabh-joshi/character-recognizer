@@ -40,7 +40,7 @@ def compress_image(pixel_list, size, base):
 
     """
     # parsing the pixels into a size x size matrix
-    large_image = np.array([float(elem) for elem in list.split(',')]).reshape(size, size)
+    large_image = np.array([float(elem) for elem in pixel_list.split(',')]).reshape(size, size)
 
     # creating a base x base matrix to store the compressed image
     small_image = np.zeros(base * base).reshape(base, base)

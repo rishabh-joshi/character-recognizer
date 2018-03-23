@@ -1,10 +1,17 @@
-import pytest
-import sys
 import os
-import numpy as np
+import sys
 sys.path.insert(0, os.path.abspath('.'))
-sys.path.append('../../..')
-from app.helper import *
+sys.path.append('../../../app')
+import pytest
+import numpy as np
+import keras
+import json
+from __init__ import db
+from create_db import Prediction
+import yaml
+import numpy as np
+
+from helper import read_metadata, compress_image
 
 # reading the metadata file
 metadata_file_path = "../../metadata.yaml"
@@ -18,7 +25,7 @@ def test_compress_image_type():
     base = 28
     size = 196
     test_input = ("0,"*size*size).strip(',')
-    result = compress_image(pixel_list, size, base)
+    result = compress_image(test_input, size, base)
     assert isinstance(result, np.ndarray)
 
 
