@@ -81,30 +81,30 @@ The two main folders in this repository are [app](app) and [develop](develop) wh
     - [EMNIST Balanced Test Data](https://www.kaggle.com/crawford/emnist/downloads/emnist-balanced-test.csv/3)
     - [EMNIST By Class Train Data](https://www.kaggle.com/crawford/emnist/downloads/emnist-byclass-train.csv/3)
     - [EMNIST By Class Test Data](https://www.kaggle.com/crawford/emnist/downloads/emnist-byclass-test.csv/3)
-9. Run the unit tests to ensure that there are no bugs in the model development and deployment code.
+9. [OPTIONAL STEP] Run the unit tests to ensure that there are no bugs in the model development and deployment code. WARNING: The tests take a long time to run because they have to build the model again to check if the model performs as expected. It is recommended to not perform testing if the model files have not been altered.
 ```
-cd develop/src/tests
-pytest
-cd ../../..
+    cd develop/src/tests
+    pytest
+    cd ../../..
 ```
 10. There are four convolutional neural network models to choose from for the prediction of characters. These are called `sparse_cnn_balanced`, `dense_cnn_balanced`, `sparse_cnn_byclass`, and `dense_cnn_byclass`. Because these models take a long time to train, they have been trained and provided as h5 files in the [develop/models](develop/models) directory. They can be read in through Keras.
 11. [OPTIONAL STEP] The best performing model from the above four models is `sparse_cnn_byclass` which is chosen by default. If the models are to be retrained, modify the [develop/metadata.yaml](develop/metadata.yaml) with the name of the model to be retrained as follows. Replace the name of the model and the corresponding data file in the YAML file while preserving the extension of the files.
 ```
-train_file : emnist-byclass-train.csv
-test_file : emnist-byclass-test.csv
-model_name : sparse_cnn_byclass.h5
+    train_file : emnist-byclass-train.csv
+    test_file : emnist-byclass-test.csv
+    model_name : sparse_cnn_byclass.h5
 ```
 12. [OPTIONAL STEP] For every model that needs retraining, run the following make command by appropriately changing the model name.
 ```
-make sparse_cnn_byclass
+    make sparse_cnn_byclass
 ```
 13. Finally, once the models have been fitted, specify the model that should be used for prediction purposes in the [develop/metadata.yaml](develop/metadata.yaml) file by changing the name of the h5 file in which the model is saved with the model you want to use.
 ```
-model_name : sparse_cnn_byclass.h5
+    model_name : sparse_cnn_byclass.h5
 ```
 14. We are now in a position to deploy the app.
 ```
-python36 app/application.py
+    python36 app/application.py
 ```
 15. Check out the app by visiting the IP address that appeared on the consol after the app has been successfully deployed.
 
