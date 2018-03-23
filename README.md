@@ -22,7 +22,13 @@ Predict the character drawn by the user on the web app by using a neural network
 
 ### Success criteria 
 
-Accuracy of classification for the neural network on a pre-determined test set of grayscale character images.
+Accuracy of classification more than 85% for the neural network on a pre-determined test set of grayscale character images.
+
+## Overall Approach
+
+Optical Character Recognition (OCR) is a field of research in pattern recognition, computer vision and artificial intelligence. It is used to capture texts from scanned documents or photos. The Extended Modified NIST (EMNIST) dataset, derived from NIST Special Database 19 is a set of handwritten character digits of [0-9], [a-z] and [A-Z]. Images of those handwritten characters are converted to 28x28 pixels.
+
+We started by building a simple neural network model with a single hidden layers and more than a thousand hidden nodes. The accuracy for this model was only 15.84%. Simple neural networks tend not to perform that well on image data becuase they treat the information in all the pixels independently, not accounting for their relative position in the image. This becomes the core idea behind convolutional neural networks because they try to create features out of pixels that are present close by (for example, a vertical/horizontal line, a curve, etc). The accuracy from the convolutional neural network was 88.39%, which passed the success criteria.
 
 ## Getting Started
 
