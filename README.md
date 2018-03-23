@@ -50,51 +50,66 @@ The two main folders in this repository are [app](app) and [develop](develop) wh
 ```
     sudo yum install python36
 ```
-2. Create a virtual environment.
+2. Install virtualenv
 ```
-    virtualenv -p python3 turnover
-    source turnover/bin/activate
+	sudo python36 -m pip install virtualenv
 ```
-3. Install Git.
+
+3. Create a virtual environment.
+```
+    virtualenv -p python36 char_rec
+    source char_rec/bin/activate
+```
+4. Install Git.
 ```
     sudo yum install git
 ```
-4. Clone the repository
+5. Clone the repository
 ```
     git clone https://github.com/rishabh-joshi/character-recognizer.git
 ```
-5. Change directory
+6. Change directory
 ```
     cd character-recognizer
 ```
-6. Create a file "config" in the app folder which stores database credentials as described below.
+7. Install all the requirements
+```
+	sudo python36 -m pip install -r requirements.txt
+```
+8. Create a file "config" in the app folder which stores database credentials as described below.
 ```
     SQLALCHEMY_DATABASE_URI = 'postgresql://<db_user>:<db_password>@<endpoint>/<db_url>'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 ```
-7. Export environment variables from the config file.
+9. Export environment variables from the config file.
 ```
     export APP_SETTINGS="config"
 ```
-8. Download the following csv data files from Kaggle and extract them into the [develop/data](develop/data) folder.
+10. Download the following csv data files from Kaggle and extract them into the [develop/data](develop/data) folder.
     - [EMNIST Balanced Train Data](https://www.kaggle.com/crawford/emnist/downloads/emnist-balanced-train.csv/3)
     - [EMNIST Balanced Test Data](https://www.kaggle.com/crawford/emnist/downloads/emnist-balanced-test.csv/3)
     - [EMNIST By Class Train Data](https://www.kaggle.com/crawford/emnist/downloads/emnist-byclass-train.csv/3)
     - [EMNIST By Class Test Data](https://www.kaggle.com/crawford/emnist/downloads/emnist-byclass-test.csv/3)
-9. [OPTIONAL STEP] Run the unit tests to ensure that there are no bugs in the model development and deployment code. WARNING: The tests take a long time to run because they have to build the model again to check if the model performs as expected. It is recommended to not perform testing if the model files have not been altered.
+11. [OPTIONAL STEP] **The Sphinx Documentation** can be found in the [develop/docs/\_build/html](develop/docs/_build/html). If the Sphinx documentation needs to be generated again, follow these steps. The documentation files will still be present in the same folder.
+```
+	cd develop/docs
+	make html
+	cd ../.. 	# return back to the root directory
+```
+12. [OPTIONAL STEP] Run the **unit tests** to ensure that there are no bugs in the model development and deployment code. WARNING: The tests take a long time to run because they have to build the model again to check if the model performs as expected. It is recommended to not perform testing if the model files have not been altered.
 ```
     cd develop/src/tests
     pytest
-    cd ../../..
+    cd ../../.. # return back to the root directory
 ```
-10. There are four convolutional neural network models to choose from for the prediction of characters. These are called `sparse_cnn_balanced`, `dense_cnn_balanced`, `sparse_cnn_byclass`, and `dense_cnn_byclass`. Because these models take a long time to train, they have been trained and provided as h5 files in the [develop/models](develop/models) directory. They can be read in through Keras.
-11. [OPTIONAL STEP] The best performing model from the above four models is `sparse_cnn_byclass` which is chosen by default. If the models are to be retrained, modify the [develop/metadata.yaml](develop/metadata.yaml) with the name of the model to be retrained as follows. Replace the name of the model and the corresponding data file in the YAML file while preserving the extension of the files.
+13. There are four convolutional neural network models to choose from for the prediction of characters. These are called `sparse_cnn_balanced`, `dense_cnn_balanced`, `sparse_cnn_byclass`, and `dense_cnn_byclass`. Because these models take a long time to train, they have been trained and provided as h5 files in the [develop/models](develop/models) directory. They can be read in through Keras.
+14. [OPTIONAL STEP] The best performing model from the above four models is `sparse_cnn_byclass` which is chosen by default. If the models are to be retrained, modify the [develop/metadata.yaml](develop/metadata.yaml) with the name of the model to be retrained as follows. Replace the name of the model and the corresponding data file in the YAML file while preserving the extension of the files.
 ```
     train_file : emnist-byclass-train.csv
     test_file : emnist-byclass-test.csv
     model_name : sparse_cnn_byclass.h5
 ```
-12. [OPTIONAL STEP] For every model that needs retraining, run the following make command by appropriately changing the model name.
+15. [OPTIONAL STEP] For every model that needs retraining, run the following make command by appropriately changing the model name.
 ```
     make sparse_cnn_byclass
 ```
@@ -102,12 +117,15 @@ The two main folders in this repository are [app](app) and [develop](develop) wh
 ```
     model_name : sparse_cnn_byclass.h5
 ```
-14. We are now in a position to deploy the app.
+16. We are now in a position to deploy the app.
 ```
     python36 app/application.py
 ```
-15. Check out the app by visiting the IP address that appeared on the consol after the app has been successfully deployed.
-
+17. Check out the app by visiting the IP address that appeared on the consol after the app has been successfully deployed.
+18. If you want to quit the app, press CTRL + C and deactivate the virtual environment.
+```
+	deactivate
+```
 
 ## Pivotal Tracker Project URL
 

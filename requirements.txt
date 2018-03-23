@@ -42,4 +42,5 @@ SQLAlchemy==1.2.5
 tensorboard==1.6.0
 tensorflow==1.6.0
 termcolor==1.1.0
+virtualenv==15.2.0
 Werkzeug==0.14.1
